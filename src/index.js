@@ -1,17 +1,28 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOMServer from 'react-dom/server';
 import './index.css';
+import express from 'express';
 import App from './App';
-import reportWebVitals from './reportWebVitals';
+//import * as ServiceWorker from './serviceWoker';
+import {BrowserRouter} from 'react-router-dom';
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+const app = express();
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+const serverRender = (req, res, next)=>{
+  const context = {};
+  const jsx = (
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  );
+  const root = ReactDOMServer.renderToString(jsx);
+  res.send(root);
+};
+
+app.use(serverRender);
+
+
+app.listen(5000, ()=>{
+  console.log('run');
+});
+//ServiceWorker.unregister();

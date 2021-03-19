@@ -1,13 +1,13 @@
 import React from 'react';
-import './App.css';
+import Eventpractice from './component/eventpractice';
+import {Route} from 'react-router-dom';
 
-function App() {
+const App = () => {
   return (
-    <div>
-      <h1> start react </h1>
-      <p>CSS 적용</p>
-      </div>
+  <>
+    <Route component= {Eventpractice} path="/" exact />;
+  </>
   );
-}
+};
 
 export default App;
